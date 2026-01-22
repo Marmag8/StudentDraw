@@ -1,0 +1,14 @@
+{
+  "1A": [
+    { "name": "Jan", "surname": "Kowalski", "classSymbol": "1A" },
+    { "name": "Anna", "surname": "Nowak", "classSymbol": "1A" },
+    { "name": "Piotr", "surname": "Zieliński", "classSymbol": "1A" },
+    { "name": "Katarzyna", "surname": "Wiśniewska", "classSymbol": "1A" }
+  ],
+  "2B": [
+    { "name": "Michał", "surname": "Skowron", "classSymbol": "2B" },
+    { "name": "Agnieszka", "surname": "Wójcik", "classSymbol": "2B" },
+    { "name": "Tomasz", "surname": "Kaczmarek", "classSymbol": "2B" },
+    { "name": "Magdalena", "surname": "Mazur", "classSymbol": "2B" }
+  ]
+}
