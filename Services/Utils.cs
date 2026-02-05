@@ -35,7 +35,7 @@ namespace StudentDraw.Services
             }
         }
 
-        public static Dictionary<string, List<Student>> LoadFromDefaults()
+        public static Dictionary<string, List<Student>> LoadDefaults()
         {
             using Stream stream = FileSystem.OpenAppPackageFileAsync("Defaults.json").GetAwaiter().GetResult();
             using StreamReader reader = new StreamReader(stream);
@@ -51,38 +51,55 @@ namespace StudentDraw.Services
 
         public static Dictionary<string, List<Student>> LoadFromFile()
         {
-            Dictionary<string, List<Student>> dict = new Dictionary<string, List<Student>>();
-            List<Student> students = new List<Student>();
-            string classSymbol = "";
-            bool inClassNode = false;
+            Dictionary<string, List<Student>> dict = new();
+            List<Student> currentStudents = new();
+            string? currentClassSymbol = null;
 
             if (!File.Exists(filePath))
             {
                 return dict;
             }
 
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines)
+            foreach (string rawLine in File.ReadAllLines(filePath))
             {
-                if (line.Trim() == "")
+                string line = rawLine.Trim();
+
+                if (line.Length == 0)
                 {
-                    inClassNode = false;
-                }
-                else if (line.Trim().Length == 2)
-                {
-                    inClassNode = true;
-                    classSymbol = line;
-                }
-                else
-                {
-                    students.Add(Student.FromString(line));
+                    if (currentClassSymbol is not null)
+                    {
+                        dict[currentClassSymbol] = new List<Student>(currentStudents);
+                        currentStudents.Clear();
+                        currentClassSymbol = null;
+                    }
+
+                    continue;
                 }
 
-                if (!inClassNode && students.Count > 0)
+                if (!line.Contains(','))
                 {
-                    dict.Add(classSymbol, new List<Student>(students));
-                    students.Clear();
+                    if (currentClassSymbol is not null)
+                    {
+                        dict[currentClassSymbol] = new List<Student>(currentStudents);
+                        currentStudents.Clear();
+                    }
+
+                    currentClassSymbol = line;
+
+                    if (!dict.ContainsKey(currentClassSymbol))
+                    {
+                        dict.Add(currentClassSymbol, new List<Student>());
+                    }
+
+                    continue;
                 }
+
+                currentStudents.Add(Student.FromString(line));
+            }
+
+            if (currentClassSymbol is not null)
+            {
+                dict[currentClassSymbol] = new List<Student>(currentStudents);
             }
 
             return dict;

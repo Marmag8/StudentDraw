@@ -4,11 +4,18 @@
              x:Class="StudentDraw.Views.DrawPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+        <VerticalStackLayout>
+            <Picker
+                x:Name="ClassPicker"
+                Title="Wybierz klasę"
+                WidthRequest="200" />
+            <Button
+                x:Name="DrawButton"
+                Text="Losuj ucznia"
+                WidthRequest="200"
+                Clicked="Draw" />
             <Label
-                Text="Witaj w aplikacji Losowanie Ucznia!"
+                x:Name="Result"
                 FontAttributes="Bold"
                 FontSize="32"
                 HorizontalOptions="Center" />

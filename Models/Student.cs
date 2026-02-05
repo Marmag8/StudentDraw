@@ -23,6 +23,8 @@
             set { _classSymbol = value; }
         }
 
+        public string DisplayName => $"{Surname} {Name}";
+
         public Student(string name, string surname, string classSymbol)
         {
             _name = name;
