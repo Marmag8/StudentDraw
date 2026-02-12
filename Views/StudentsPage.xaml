@@ -14,19 +14,22 @@
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="*,Auto, Auto"
-                          Padding="0,12,0,4">
+                    <Grid ColumnDefinitions="Auto, Auto, Auto"
+                          Padding="0,12,0,4"
+                          Margin="0, 12">
                         <Label Grid.Column="0"
                                Text="{Binding ClassSymbol}"
                                FontAttributes="Bold"
                                FontSize="18"
+                               Padding="12, 0"
                                VerticalOptions="Center" />
 
                         <Button Grid.Column="1"
                                 Text="+"
                                 WidthRequest="24"
                                 HeightRequest="24"
-                                Padding="0"
+                                Padding="12, 0"
+                                Margin="6, 0"
                                 Clicked="AddStudentToClass"
                                 CommandParameter="{Binding ClassSymbol}"
                                 VerticalOptions="Center"
@@ -35,9 +38,9 @@
                                 Text="Usuń klasę"
                                 Clicked="DeleteClass"
                                 CommandParameter="{Binding ClassSymbol}"
-                                WidthRequest="48"
+                                WidthRequest="96"
                                 HeightRequest="24"
-                                Padding="0"
+                                Padding="12, 0"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start" />
                     </Grid>
@@ -46,9 +49,23 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding DisplayName}"
-                           FontSize="16"
-                           Margin="12,2,0,2" />
+                    <Grid ColumnDefinitions="Auto, *"
+                          Padding="12, 2">
+                        <Label Grid.Column="0"
+                               Text="{Binding DisplayName}"
+                               FontSize="16"
+                               Margin="12,2"
+                               VerticalOptions="Center" />
+                        <Button Grid.Column="1"
+                                Text="Usuń"
+                                Clicked="DeleteStudent"
+                                CommandParameter="{Binding}"
+                                WidthRequest="64"
+                                HeightRequest="24"
+                                Padding="0"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start" />
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

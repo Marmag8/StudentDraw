@@ -152,6 +152,33 @@ public partial class StudentsPage : ContentPage
         BuildGroupedCollection(students);
     }
 
+    private async void DeleteStudent(object sender, EventArgs e)
+    {
+        if (sender is not Button button)
+        {
+            return;
+        }
+        if (button.CommandParameter is not StudentEntry entry)
+        {
+            return;
+        }
+        if (!students.ContainsKey(entry.ClassSymbol))
+        {
+            await DisplayAlert("B³¹d", $"Nie znaleziono klasy: {entry.ClassSymbol}", "OK");
+            return;
+        }
+        Student? studentToRemove = students[entry.ClassSymbol]
+            .FirstOrDefault(s => s.Name == entry.Name && s.Surname == entry.Surname);
+        if (studentToRemove == null)
+        {
+            await DisplayAlert("B³¹d", $"Nie znaleziono ucznia: {entry.DisplayName} w klasie {entry.ClassSymbol}", "OK");
+            return;
+        }
+        students[entry.ClassSymbol].Remove(studentToRemove);
+        Utils.SaveToFile(students);
+        BuildGroupedCollection(students);
+    }
+
     public class StudentEntry
     {
         public string ClassSymbol { get; }
