@@ -1,0 +1,75 @@
+﻿/* Ogólne style dla stron */
+contentpage {
+    background-color: #f0f0f0;
+}
+
+/* Style przycisków */
+button {
+    background-color: #512BD4;
+    color: white;
+    font-size: 14;
+    corner-radius: 8;
+    padding: 14, 10;
+    margin: 4;
+}
+
+/* Specyficzne klasy dla StudentsPage */
+.group-header-label {
+    font-weight: bold;
+    font-size: 18;
+    color: #190649;
+}
+
+.student-name-label {
+    font-size: 16;
+    color: #000000;
+}
+
+.add-student-btn {
+    width-request: 32;
+    height-request: 32;
+    padding: 0;
+    margin: 6, 0;
+    background-color: #512BD4;
+}
+
+.delete-class-btn {
+    background-color: #D600AA; /* Magenta */
+    width-request: 110;
+    height-request: 32;
+    padding: 0;
+}
+
+.delete-student-btn {
+    background-color: #FF4444;
+    width-request: 70;
+    height-request: 30;
+    padding: 0;
+    font-size: 12;
+}
+
+/* Specyficzne klasy dla DrawPage */
+.draw-container {
+    padding: 20;
+    spacing: 20;
+}
+
+.result-label {
+    font-weight: bold;
+    font-size: 32;
+    color: #2B0B98;
+    horizontal-options: center;
+}
+
+.big-button {
+    width-request: 200;
+    height-request: 50;
+    font-size: 18;
+    horizontal-options: center;
+}
+
+picker {
+    width-request: 200;
+    horizontal-options: center;
+    background-color: white;
+}

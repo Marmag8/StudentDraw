@@ -4,6 +4,10 @@
              x:Class="StudentDraw.Views.StudentsPage"
              Title="Uczniowie">
 
+    <ContentPage.Resources>
+        <StyleSheet Source="/Resources/Styles/styles.css" />
+    </ContentPage.Resources>
+
     <VerticalStackLayout Padding="12" Spacing="12">
 
         <Button Text="Dodaj klasę"
@@ -19,28 +23,22 @@
                           Margin="0, 12">
                         <Label Grid.Column="0"
                                Text="{Binding ClassSymbol}"
-                               FontAttributes="Bold"
-                               FontSize="18"
+                               StyleClass="group-header-label"
                                Padding="12, 0"
                                VerticalOptions="Center" />
 
                         <Button Grid.Column="1"
                                 Text="+"
-                                WidthRequest="24"
-                                HeightRequest="24"
-                                Padding="12, 0"
-                                Margin="6, 0"
+                                StyleClass="add-student-btn"
                                 Clicked="AddStudentToClass"
                                 CommandParameter="{Binding ClassSymbol}"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start" />
                         <Button Grid.Column="2"
                                 Text="Usuń klasę"
+                                StyleClass="delete-class-btn"
                                 Clicked="DeleteClass"
                                 CommandParameter="{Binding ClassSymbol}"
-                                WidthRequest="96"
-                                HeightRequest="24"
-                                Padding="12, 0"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start" />
                     </Grid>
@@ -53,16 +51,14 @@
                           Padding="12, 2">
                         <Label Grid.Column="0"
                                Text="{Binding DisplayName}"
-                               FontSize="16"
+                               StyleClass="student-name-label"
                                Margin="12,2"
                                VerticalOptions="Center" />
                         <Button Grid.Column="1"
                                 Text="Usuń"
+                                StyleClass="delete-student-btn"
                                 Clicked="DeleteStudent"
                                 CommandParameter="{Binding}"
-                                WidthRequest="64"
-                                HeightRequest="24"
-                                Padding="0"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start" />
                     </Grid>

@@ -3,22 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StudentDraw.Views.DrawPage">
 
+    <ContentPage.Resources>
+        <StyleSheet Source="/Resources/Styles/styles.css" />
+    </ContentPage.Resources>
+
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout StyleClass="draw-container">
             <Picker
                 x:Name="ClassPicker"
-                Title="Wybierz klasę"
-                WidthRequest="200" />
+                Title="Wybierz klasę" />
             <Button
                 x:Name="DrawButton"
                 Text="Losuj ucznia"
-                WidthRequest="200"
+                StyleClass="big-button"
                 Clicked="Draw" />
             <Label
                 x:Name="Result"
-                FontAttributes="Bold"
-                FontSize="32"
-                HorizontalOptions="Center" />
+                StyleClass="result-label" />
         </VerticalStackLayout>
     </ScrollView>
 
