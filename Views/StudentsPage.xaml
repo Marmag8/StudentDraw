@@ -47,20 +47,27 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="Auto, *"
+                    <Grid ColumnDefinitions="*, Auto, Auto"
                           Padding="12, 2">
                         <Label Grid.Column="0"
                                Text="{Binding DisplayName}"
                                StyleClass="student-name-label"
                                Margin="12,2"
                                VerticalOptions="Center" />
-                        <Button Grid.Column="1"
+                        <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <CheckBox IsChecked="{Binding IsPresent}"
+                                      CheckedChanged="OnIsPresentChanged" />
+                                                    <Label Text="obecny"
+                                                           VerticalOptions="Center"
+                                                           FontSize="14" />
+                        </HorizontalStackLayout>
+                        <Button Grid.Column="2"
                                 Text="Usuń"
                                 StyleClass="delete-student-btn"
                                 Clicked="DeleteStudent"
                                 CommandParameter="{Binding}"
                                 VerticalOptions="Center"
-                                HorizontalOptions="Start" />
+                                HorizontalOptions="End" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

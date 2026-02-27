@@ -43,7 +43,7 @@ public partial class StudentsPage : ContentPage
             IEnumerable<StudentEntry> entries = kvp.Value
                 .OrderBy(s => s.Surname)
                 .ThenBy(s => s.Name)
-                .Select(s => new StudentEntry(classSymbol, s.Name, s.Surname));
+                .Select(s => new StudentEntry(s));
 
             newCollection.Add(new StudentGroup(classSymbol, entries));
         }
@@ -179,19 +179,48 @@ public partial class StudentsPage : ContentPage
         BuildGroupedCollection(students);
     }
 
-    public class StudentEntry
+    private void OnIsPresentChanged(object sender, CheckedChangedEventArgs e)
     {
-        public string ClassSymbol { get; }
-        public string Name { get; }
-        public string Surname { get; }
-        public string DisplayName => $"{Surname} {Name}";
-
-        public StudentEntry(string classSymbol, string name, string surname)
+        if (sender is CheckBox checkBox && checkBox.BindingContext is StudentEntry entry)
         {
-            ClassSymbol = classSymbol;
-            Name = name;
-            Surname = surname;
+            if (entry.IsPresent != e.Value)
+            {
+                entry.IsPresent = e.Value;
+            }
+            Utils.SaveToFile(students);
         }
+    }
+
+    public class StudentEntry : System.ComponentModel.INotifyPropertyChanged
+    {
+        public Student Student { get; }
+
+        public string ClassSymbol => Student.ClassSymbol;
+        public string Name => Student.Name;
+        public string Surname => Student.Surname;
+        public string DisplayName => Student.DisplayName;
+
+        public bool IsPresent
+        {
+            get => Student.IsPresent;
+            set
+            {
+                if (Student.IsPresent != value)
+                {
+                    Student.IsPresent = value;
+                    OnPropertyChanged(nameof(IsPresent));
+                }
+            }
+        }
+
+        public StudentEntry(Student student)
+        {
+            Student = student;
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
     }
 
     public class StudentGroup : ObservableCollection<StudentEntry>

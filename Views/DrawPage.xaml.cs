@@ -43,7 +43,7 @@ namespace StudentDraw.Views
             {
                 foreach (List<Student> classStudents in students.Values)
                 {
-                    drawPool.AddRange(classStudents);
+                    drawPool.AddRange(classStudents.Where(s => s.IsPresent));
                 }
             }
             else
@@ -51,7 +51,7 @@ namespace StudentDraw.Views
                 string selectedClass = ClassPicker.SelectedItem.ToString() ?? "";
                 if (students.ContainsKey(selectedClass))
                 {
-                    drawPool.AddRange(students[selectedClass]);
+                    drawPool.AddRange(students[selectedClass].Where(s => s.IsPresent));
                 }
             }
             if (drawPool.Count == 0)
@@ -60,9 +60,28 @@ namespace StudentDraw.Views
                 return;
             }
 
+            List<Student> availablePool = drawPool
+                .Where(s => !Utils.RecentlyDrawn.Contains(s.ToString()))
+                .ToList();
+
+            if (availablePool.Count == 0)
+            {
+                Result.Text = "Wszyscy obecni uczniowie zostali niedawno wylosowani.";
+                return;
+            }
+
             Random rand = new Random();
-            int index = rand.Next(drawPool.Count);
-            Student selectedStudent = drawPool[index];
+            int index = rand.Next(availablePool.Count);
+            Student selectedStudent = availablePool[index];
+
+            Utils.RecentlyDrawn.Add(selectedStudent.ToString());
+            if (Utils.RecentlyDrawn.Count > 3)
+            {
+                Utils.RecentlyDrawn.RemoveAt(0);
+            }
+
+            Utils.SaveToFile(students);
+
             Result.Text = $"Wylosowany uczeń: {selectedStudent.DisplayName}";
         }
     }

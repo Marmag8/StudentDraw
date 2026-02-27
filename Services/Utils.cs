@@ -5,6 +5,8 @@ namespace StudentDraw.Services
 {
     internal class Utils
     {
+        public static List<string> RecentlyDrawn { get; set; } = new();
+
         static readonly string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LosowanieUcznia", "data.txt");
         public static void SaveToFile(Dictionary<string, List<Student>> dict)
         {
@@ -33,6 +35,12 @@ namespace StudentDraw.Services
 
                 File.AppendAllText(filePath, Environment.NewLine);
             }
+
+            File.AppendAllText(filePath, "RECENT" + Environment.NewLine);
+            foreach (string recent in RecentlyDrawn)
+            {
+                File.AppendAllText(filePath, recent + Environment.NewLine);
+            }
         }
 
         public static Dictionary<string, List<Student>> LoadDefaults()
@@ -51,6 +59,8 @@ namespace StudentDraw.Services
 
         public static Dictionary<string, List<Student>> LoadFromFile()
         {
+            RecentlyDrawn.Clear();
+
             if (!File.Exists(filePath))
             {
                 var defaults = LoadDefaults();
@@ -61,10 +71,32 @@ namespace StudentDraw.Services
             Dictionary<string, List<Student>> dict = new();
             List<Student> currentStudents = new();
             string? currentClassSymbol = null;
+            bool readingRecent = false;
 
             foreach (string rawLine in File.ReadAllLines(filePath))
             {
                 string line = rawLine.Trim();
+
+                if (line == "RECENT")
+                {
+                    if (currentClassSymbol is not null)
+                    {
+                        dict[currentClassSymbol] = new List<Student>(currentStudents);
+                        currentStudents.Clear();
+                        currentClassSymbol = null;
+                    }
+                    readingRecent = true;
+                    continue;
+                }
+
+                if (readingRecent)
+                {
+                    if (line.Length > 0)
+                    {
+                        RecentlyDrawn.Add(line);
+                    }
+                    continue;
+                }
 
                 if (line.Length == 0)
                 {
