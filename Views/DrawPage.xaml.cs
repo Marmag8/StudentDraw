@@ -5,22 +5,34 @@ namespace StudentDraw.Views
 {
     public partial class DrawPage : ContentPage
     {
-        Dictionary<string, List<Student>> students;
+        Dictionary<string, List<Student>> students = new();
 
         public DrawPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
             students = Utils.LoadFromFile();
-            if (students.Count == 0)
-            {
-                students = Utils.LoadDefaults();
-            }
 
             List<string> classNames = new List<string> { "Wszystkie Klasy" };
             classNames.AddRange(students.Keys);
+
+            string? selectedClass = ClassPicker.SelectedItem?.ToString();
+
             ClassPicker.ItemsSource = classNames;
-            ClassPicker.SelectedIndex = 0;
+
+            if (selectedClass != null && classNames.Contains(selectedClass))
+            {
+                ClassPicker.SelectedItem = selectedClass;
+            }
+            else
+            {
+                ClassPicker.SelectedIndex = 0;
+            }
         }
 
         private void Draw(object sender, EventArgs e)

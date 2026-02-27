@@ -51,14 +51,16 @@ namespace StudentDraw.Services
 
         public static Dictionary<string, List<Student>> LoadFromFile()
         {
+            if (!File.Exists(filePath))
+            {
+                var defaults = LoadDefaults();
+                SaveToFile(defaults);
+                return defaults;
+            }
+
             Dictionary<string, List<Student>> dict = new();
             List<Student> currentStudents = new();
             string? currentClassSymbol = null;
-
-            if (!File.Exists(filePath))
-            {
-                return dict;
-            }
 
             foreach (string rawLine in File.ReadAllLines(filePath))
             {
