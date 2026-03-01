@@ -18,6 +18,15 @@ namespace StudentDraw.Views
 
             students = Utils.LoadFromFile();
 
+            if (Utils.LuckyNumber > 0)
+            {
+                LuckyNumberLabel.Text = $"Szczęśliwy numerek: {Utils.LuckyNumber}";
+            }
+            else
+            {
+                LuckyNumberLabel.Text = "";
+            }
+
             List<string> classNames = new List<string> { "Wszystkie Klasy" };
             classNames.AddRange(students.Keys);
 
@@ -43,7 +52,7 @@ namespace StudentDraw.Views
             {
                 foreach (List<Student> classStudents in students.Values)
                 {
-                    drawPool.AddRange(classStudents.Where(s => s.IsPresent));
+                    drawPool.AddRange(classStudents.Where(s => s.IsPresent && s.IndexNumber != Utils.LuckyNumber));
                 }
             }
             else
@@ -51,7 +60,7 @@ namespace StudentDraw.Views
                 string selectedClass = ClassPicker.SelectedItem.ToString() ?? "";
                 if (students.ContainsKey(selectedClass))
                 {
-                    drawPool.AddRange(students[selectedClass].Where(s => s.IsPresent));
+                    drawPool.AddRange(students[selectedClass].Where(s => s.IsPresent && s.IndexNumber != Utils.LuckyNumber));
                 }
             }
             if (drawPool.Count == 0)
@@ -67,6 +76,14 @@ namespace StudentDraw.Views
             if (availablePool.Count == 0)
             {
                 Result.Text = "Wszyscy obecni uczniowie zostali niedawno wylosowani.";
+
+                Utils.RecentlyDrawn.Add("");
+                if (Utils.RecentlyDrawn.Count > 3)
+                {
+                    Utils.RecentlyDrawn.RemoveAt(0);
+                }
+                Utils.SaveToFile(students);
+
                 return;
             }
 

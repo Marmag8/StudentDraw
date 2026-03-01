@@ -30,7 +30,9 @@
             set { _isPresent = value; }
         }
 
-        public string DisplayName => $"{Surname} {Name}";
+        public int IndexNumber { get; set; }
+
+        public string DisplayName => $"{IndexNumber}. {Surname} {Name}";
 
         public Student(string name, string surname, string classSymbol)
         {

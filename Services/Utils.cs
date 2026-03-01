@@ -6,10 +6,46 @@ namespace StudentDraw.Services
     internal class Utils
     {
         public static List<string> RecentlyDrawn { get; set; } = new();
+        public static int LuckyNumber { get; private set; } = -1;
+
+        public static void AssignIndexNumbers(Dictionary<string, List<Student>> dict)
+        {
+            foreach (var key in dict.Keys.ToList())
+            {
+                var sorted = dict[key].OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
+                for (int i = 0; i < sorted.Count; i++)
+                {
+                    sorted[i].IndexNumber = i + 1;
+                }
+                dict[key] = sorted;
+            }
+        }
+
+        public static void RollLuckyNumber(Dictionary<string, List<Student>> dict)
+        {
+            if (LuckyNumber != -1) return;
+
+            int maxStudents = 0;
+            foreach (var list in dict.Values)
+            {
+                if (list.Count > maxStudents) maxStudents = list.Count;
+            }
+
+            if (maxStudents > 0)
+            {
+                LuckyNumber = new Random().Next(1, maxStudents + 1);
+            }
+            else
+            {
+                LuckyNumber = 0;
+            }
+        }
 
         static readonly string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LosowanieUcznia", "data.txt");
         public static void SaveToFile(Dictionary<string, List<Student>> dict)
         {
+            AssignIndexNumbers(dict);
+
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -64,6 +100,8 @@ namespace StudentDraw.Services
             if (!File.Exists(filePath))
             {
                 var defaults = LoadDefaults();
+                AssignIndexNumbers(defaults);
+                RollLuckyNumber(defaults);
                 SaveToFile(defaults);
                 return defaults;
             }
@@ -135,6 +173,9 @@ namespace StudentDraw.Services
             {
                 dict[currentClassSymbol] = new List<Student>(currentStudents);
             }
+
+            AssignIndexNumbers(dict);
+            RollLuckyNumber(dict);
 
             return dict;
         }

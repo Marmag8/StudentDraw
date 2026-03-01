@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using StudentDraw.Models;
 using StudentDraw.Services;
 
@@ -191,7 +192,7 @@ public partial class StudentsPage : ContentPage
         }
     }
 
-    public class StudentEntry : System.ComponentModel.INotifyPropertyChanged
+    public class StudentEntry : INotifyPropertyChanged
     {
         public Student Student { get; }
 
@@ -218,9 +219,9 @@ public partial class StudentsPage : ContentPage
             Student = student;
         }
 
-        public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public class StudentGroup : ObservableCollection<StudentEntry>

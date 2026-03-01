@@ -18,6 +18,10 @@
                 StyleClass="big-button"
                 Clicked="Draw" />
             <Label
+                x:Name="LuckyNumberLabel"
+                FontSize="20"
+                HorizontalOptions="Center" />
+            <Label
                 x:Name="Result"
                 StyleClass="result-label" />
         </VerticalStackLayout>
