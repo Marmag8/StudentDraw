@@ -3,10 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StudentDraw.Views.DrawPage">
 
-    <ContentPage.Resources>
-        <StyleSheet Source="/Resources/Styles/styles.css" />
-    </ContentPage.Resources>
-
     <ScrollView>
         <VerticalStackLayout StyleClass="draw-container">
             <Picker
@@ -19,8 +15,7 @@
                 Clicked="Draw" />
             <Label
                 x:Name="LuckyNumberLabel"
-                FontSize="20"
-                HorizontalOptions="Center" />
+                StyleClass="lucky-number-label" />
             <Label
                 x:Name="Result"
                 StyleClass="result-label" />

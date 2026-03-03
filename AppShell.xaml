@@ -7,6 +7,15 @@
     Title="Losowanie Ucznia"
     FlyoutBehavior="Flyout">
 
+    <Shell.TitleView>
+        <Grid StyleClass="titlebar" ColumnDefinitions="Auto,*">
+            <Label StyleId="titlebar-title"
+                   Grid.Column="1"
+                   Text="System Losowania"
+                   StyleClass="v-center" />
+        </Grid>
+    </Shell.TitleView>
+
     <FlyoutItem Title="Losowanie" Route="draw">
         <ShellContent
             Title="Losuj ucznia"

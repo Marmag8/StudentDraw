@@ -58,17 +58,32 @@ button {
     font-weight: bold;
     font-size: 32;
     color: #2B0B98;
-    horizontal-options: center;
+    align-self: center;
 }
 
 .big-button {
     width-request: 200;
     height-request: 50;
     font-size: 18;
-    horizontal-options: center;
+    align-self: center;
 }
 
 picker {
     width-request: 200;
-    horizontal-options: center;
+    align-self: center;
+}
+
+.lucky-number-label {
+    font-size: 24;
+    align-self: center;
+}
+
+.titlebar {
+    padding: 5;
+    background-color: #FF0000;
+}
+
+#titlebar-title {
+    font-size: 16;
+    color: #FF0000
 }
