@@ -9,10 +9,8 @@
 
     <Shell.TitleView>
         <Grid StyleClass="titlebar" ColumnDefinitions="Auto,*">
-            <Label StyleId="titlebar-title"
-                   Grid.Column="1"
-                   Text="System Losowania"
-                   StyleClass="v-center" />
+            <Label Grid.Column="1"
+                   Text="System Losowania" />
         </Grid>
     </Shell.TitleView>
 

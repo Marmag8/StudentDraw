@@ -69,6 +69,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include=".github\copilot-instructions.md" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Views\DrawPage.xaml.cs">
 	    <DependentUpon>DrawPage.xaml</DependentUpon>
 	  </Compile>

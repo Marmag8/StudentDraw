@@ -4,56 +4,78 @@
              x:Class="StudentDraw.Views.StudentsPage"
              Title="Uczniowie">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout StyleClass="students-page">
 
         <Button Text="Dodaj klasę"
+                StyleClass="add-class-btn"
                 Clicked="AddClass" />
 
         <CollectionView ItemsSource="{Binding GroupedStudents}"
-                        IsGrouped="True">
+                        IsGrouped="True"
+                        StyleClass="students-list"
+                        MaximumHeightRequest="850">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+            </CollectionView.ItemsLayout>
+
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="Auto, Auto, Auto">
-                        <Label Grid.Column="0"
-                               Text="{Binding ClassSymbol}"
-                               StyleClass="group-header-label"
-                               VerticalOptions="Center" />
+                    <Border StyleClass="group-container-header"
+                            HorizontalOptions="Fill"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 14,14,0,0">
+                        <Grid ColumnDefinitions="*, Auto, Auto"
+                              StyleClass="group-header-row">
+                            <Label Grid.Column="0"
+                                   Text="{Binding ClassSymbol}" />
 
-                        <Button Grid.Column="1"
-                                Text="+"
-                                StyleClass="add-student-btn"
-                                Clicked="AddStudentToClass"
-                                CommandParameter="{Binding ClassSymbol}" />
-                        <Button Grid.Column="2"
-                                Text="Usuń klasę"
-                                StyleClass="delete-class-btn"
-                                Clicked="DeleteClass"
-                                CommandParameter="{Binding ClassSymbol}" />
-                    </Grid>
+                            <Button Grid.Column="1"
+                                    Text="+"
+                                    StyleClass="add-student-btn"
+                                    Clicked="AddStudentToClass"
+                                    CommandParameter="{Binding ClassSymbol}" />
+                            <Button Grid.Column="2"
+                                    Text="Usuń klasę"
+                                    StyleClass="delete-class-btn"
+                                    Clicked="DeleteClass"
+                                    CommandParameter="{Binding ClassSymbol}" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="*, Auto, Auto">
-                        <Label Grid.Column="0"
-                               Text="{Binding DisplayName}"
-                               StyleClass="student-name-label" />
-                        <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <CheckBox IsChecked="{Binding IsPresent}"
-                                      CheckedChanged="OnIsPresentChanged" />
-                                                    <Label Text="obecny" />
-                        </HorizontalStackLayout>
-                        <Button Grid.Column="2"
-                                Text="Usuń"
-                                StyleClass="delete-student-btn"
-                                Clicked="DeleteStudent"
-                                CommandParameter="{Binding}" />
-                    </Grid>
+                    <Border StyleClass="group-container-item"
+                            HorizontalOptions="Fill"
+                            StrokeThickness="0">
+                        <Grid ColumnDefinitions="*, Auto" 
+                              RowDefinitions="Auto, Auto"
+                              StyleClass="student-row">
+                            <Label Grid.Column="0"
+                                   Grid.Row="0"
+                                   Text="{Binding DisplayName}"
+                                   StyleClass="student-name-label" />
+                            <HorizontalStackLayout Grid.Column="0" 
+                                                   Grid.Row="1"
+                                                   StyleClass="presence-row">
+                                <CheckBox IsChecked="{Binding IsPresent}"
+                                          CheckedChanged="OnIsPresentChanged" />
+                                <Label Text="obecny"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Button Grid.Column="1"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Text="Usuń"
+                                    StyleClass="delete-student-btn"
+                                    Clicked="DeleteStudent"
+                                    CommandParameter="{Binding}" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </VerticalStackLayout>
 
 </ContentPage>

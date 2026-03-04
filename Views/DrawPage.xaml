@@ -4,21 +4,33 @@
              x:Class="StudentDraw.Views.DrawPage">
 
     <ScrollView>
-        <VerticalStackLayout StyleClass="draw-container">
-            <Picker
-                x:Name="ClassPicker"
-                Title="Wybierz klasę" />
-            <Button
-                x:Name="DrawButton"
-                Text="Losuj ucznia"
-                StyleClass="big-button"
-                Clicked="Draw" />
-            <Label
-                x:Name="LuckyNumberLabel"
-                StyleClass="lucky-number-label" />
-            <Label
-                x:Name="Result"
-                StyleClass="result-label" />
+        <VerticalStackLayout StyleClass="draw-container"
+                             VerticalOptions="Center">
+            <Label Text="🎲 Losowanie"
+                   StyleClass="draw-title" />
+
+            <Border StyleClass="draw-card"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20">
+                <VerticalStackLayout StyleClass="draw-card-content">
+                    <Picker
+                        x:Name="ClassPicker"
+                        Title="Wybierz klasę" />
+                    <Button
+                        x:Name="DrawButton"
+                        Text="Losuj ucznia"
+                        StyleClass="big-button"
+                        Clicked="Draw" />
+                    <Label
+                        x:Name="LuckyNumberLabel"
+                        HorizontalOptions="Center"
+                        StyleClass="lucky-number-label" />
+                    <Label
+                        x:Name="Result"
+                        HorizontalOptions="Center"
+                        StyleClass="result-label" />
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 
